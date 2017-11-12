@@ -45,6 +45,9 @@ public:
 	// get win or lose
 	bool getWin();
 
+	// expose nearby block excepty booms
+	void exposeNearby(int x, int y);
+
 };
 
 #endif

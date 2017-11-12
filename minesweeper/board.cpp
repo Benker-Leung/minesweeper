@@ -118,6 +118,8 @@ bool Board::exposeBlock(int x, int y)
 		gameContinue = false;
 	if (this->boomNum + this->blocksLeft == this->size*this->size)
 		win = true;
+	if (this->block[x][y].getRole() == 0)
+		exposeNearby(x, y);
 	return true;
 }
 
@@ -176,5 +178,27 @@ void Board::printBoard(bool printAll)
 bool Board::getWin()
 {
 	return this->win;
+}
+
+void Board::exposeNearby(int x, int y)
+{
+
+	int startX = x - 1;		//starting position of exposing
+	int startY = y - 1;		//starting position of exposing
+	for (int i = 0; i < 9; i++) {
+		startX = (x - 1) + i / 3;
+		startY = (y - 1) + i % 3;
+		// if out of bound, check next term
+		if (startX < 0 || startY < 0 || startX >= this->size || startY >= this->size)
+			continue;
+		// if the block is -1(boom), do not expose
+		if (block[startX][startY].getRole() == -1)
+			continue;
+		// if the block exposed successfully and it is blank, then continue expose
+		bool success = block[startX][startY].setExposed();
+		if (block[startX][startY].getRole() == 0 && success)
+			exposeNearby(startX, startY);
+	}
+	return;
 }
 

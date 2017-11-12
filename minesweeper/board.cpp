@@ -31,3 +31,16 @@ Board::~Board()
 	}
 }
 
+int Board::findBoom(int x, int y){
+	int count = 0;
+	for(int i = y-1; i >= y+1; i++){
+		if(i < 0 || i >= this->size) continue;
+		for(int j = x-1; j >= x+1; j++){
+			if(j < 0 || j >= this->size) continue;
+			if(board[i][j]->getRole() == -1){
+				count++;
+			}
+		}
+	}
+	return count;
+}

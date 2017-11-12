@@ -71,4 +71,3 @@ bool Block::getExposed()
 {
 	return this->exposed;
 }
-

@@ -34,8 +34,8 @@ void Control::startGame()
 		board->printBoard();
 
 		cout << "Input the action, [e] for expose; [f] for flag:" << endl;
+		cout << "e x y [or] f x y(enter) [where x, y are coordinate]:";
 		cin >> choice;
-		cout << "Input the coordinate (x, y):" << endl;
 		cin >> x;
 		cin >> y;
 		

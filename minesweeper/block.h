@@ -31,8 +31,8 @@ public:
 	// set the block is flagged or not, true for flagged
 	bool setFlagged(bool flag);
 
-	// set the block is exposed or not, true for exposed
-	bool setExposed(bool expose);
+	// set the block to be exposed, return true for success
+	bool setExposed();
 
 	// return the x-coordinate
 	int getX();

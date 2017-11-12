@@ -16,11 +16,12 @@ private:
 	int flagLeft;		// storing the number of flags where the player can use
 	bool gameContinue;	// a bool to store game status, it is false if gameover
 	bool win;			// true if win
+	int difficulty;
 
 public:
 
 	// constructor, only create the varible required but not assigning role yet
-	Board(int size);
+	Board(int size, int dif);
 	// destructor, delete all dynamic allocated memories in this class
 	~Board();
 

@@ -3,15 +3,17 @@
 #include "board.h"
 #include "utils.h"
 
-Board::Board(int size)
+Board::Board(int size, int dif)
 {
 	srand(time(NULL));
 	this->size = size;
 	this->blocksLeft = size * size;
-	this->boomNum = size * size / 6;
+	this->difficulty = dif;
+	this->boomNum = size * size / (dif*8);
 	this->flagLeft = this->boomNum;
 	this->gameContinue = true;
 	this->win = false;
+	
 
 	this->block = new Block*[size];
 	for (int i = 0; i < size; i++) {

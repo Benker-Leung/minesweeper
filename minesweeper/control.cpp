@@ -21,7 +21,12 @@ void Control::startGame()
 		cout << "Input the size of game board(e.g Input 3 if 3x3 size needed):";
 		cin >> this->size;
 	}
-	this->board = new Board(this->size);
+	int dif = -1;
+	while (dif < 1 || dif >4) {
+		cout << "Input the difficulty [1-4], 1 is most difficult:";
+		cin >> dif;
+	}
+	this->board = new Board(this->size, dif);
 	// initialize the gameboard
 	this->board->assignRole();
 

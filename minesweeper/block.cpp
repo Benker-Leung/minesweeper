@@ -31,10 +31,6 @@ bool Block::assignRole(int role)
 
 bool Block::setFlagged(bool flag)
 {
-	if (this->flagged && flag == true)
-		return false;
-	else if (!this->flagged && flag == false)
-		return false;
 	this->flagged = flag;
 	return true;
 }

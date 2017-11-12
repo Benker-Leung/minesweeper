@@ -47,8 +47,9 @@ void Control::startGame()
 		case 'f': board->flagBlock(x, y); break;
 		default: break;
 		}
+		board->checkBlockLeft();
 	}
-
+	board->printBoard(true);
 	cout << "*************Game Start*************" << endl;
 	if (board->getWin())
 		cout << "*************You Win*************" << endl;

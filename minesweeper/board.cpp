@@ -96,8 +96,15 @@ bool Board::flagBlock(int x, int y)
 	if (this->block[x][y].getExposed())
 		return false;
 
-	this->block[x][y].setFlagged(true);
-	this->flagLeft--;
+	// if the block is flagged, then unflag it
+	if (this->block[x][y].getFlagged()) {
+		block[x][y].setFlagged(false);
+		flagLeft++;
+	}
+	else {
+		this->block[x][y].setFlagged(true);
+		this->flagLeft--;
+	}
 	return true;
 }
 
@@ -112,12 +119,11 @@ bool Board::exposeBlock(int x, int y)
 		return false;
 
 	this->block[x][y].setExposed();
-	this->blocksLeft--;
 	// if the exposed block is boom, then gameover
-	if (this->block[x][y].getRole() == -1)
+	if (this->block[x][y].getRole() == -1) {
 		gameContinue = false;
-	if (this->boomNum + this->blocksLeft == this->size*this->size)
-		win = true;
+		win = false;
+	}
 	if (this->block[x][y].getRole() == 0)
 		exposeNearby(x, y);
 	return true;
@@ -125,6 +131,10 @@ bool Board::exposeBlock(int x, int y)
 
 bool Board::checkGameContinue()
 {
+	if (blocksLeft == 0 && flagLeft == 0) {
+		gameContinue = false;
+		win = true;
+	}
 	return gameContinue;
 }
 
@@ -134,45 +144,164 @@ void Board::printBoard(bool printAll)
 	if (this->block == nullptr)
 		return;
 
-	//gameboard
-	int tempSize = 1;
-
-	if (this->size >= 10)
-		tempSize = size/2 - 4;
+	int m = 5;
 
 	//---GAME BOARD---
-	for (int i = 0; i < tempSize; i++) {
+	cout << endl;
+	for (int i = 0; i < size*m; i++) {
 		cout << '-';
 	}
-	cout << "GAME BOARD";
-	for (int i = 0; i < tempSize; i++) {
+	cout << "GAME  BOARD";
+	for (int i = 0; i < size*m; i++) {
 		cout << '-';
 	}
 	cout << endl;
 
+	// pinrt the x-coordinate
+	cout << "\t";
 	for (int i = 0; i < size; i++) {
+		cout << i << "\t";
+	}
+	cout << endl << "\t";
+	for (int i = 0; i < size; i++) {
+		cout << "-\t";
+	}
+	cout << endl;
+	// end of printing x-coordinate
+
+	for (int i = 0; i < size; i++) {
+		// print the y-coordinate
+		cout << i << "|\t";
 		for (int j = 0; j < size; j++) {
-			if (this->block[i][j].getExposed() || printAll)
+			if (this->block[i][j].getFlagged()) {
+				cout << "F\t";
+				continue;
+			}
+			if (this->block[i][j].getExposed() || printAll) {
+				switch (this->block[i][j].getRole()) {
+				case 0:	cout << " \t"; break;
+				case -1: cout << "X\t"; break;
+				default: cout << this->block[i][j].getRole() << "\t"; break;
+				}
+			}
+			else
+				cout << "?\t";
+		}
+		cout << " |" << i << endl;
+	}
+
+	// pinrt the x-coordinate
+	cout << "\t";
+	for (int i = 0; i < size; i++) {
+		cout << "-\t";
+	}
+	cout << endl << "\t";
+	for (int i = 0; i < size; i++) {
+		cout << i << "\t";
+	}
+	cout << endl;
+	// end of printing x-coordinate
+
+
+	// print some information
+	cout << endl;
+	for (int i = 0; i < size*m; i++) {
+		cout << '-';
+	}
+	cout << "INFORMATION";
+	for (int i = 0; i < size*m; i++) {
+		cout << '-';
+	}
+	cout << endl;
+	cout << "\tFlag lefted: " << this->flagLeft << " | Blocks Left: " << this->blocksLeft << endl;
+
+	// end of printing some information
+
+	//---GAME BOARD---
+	for (int i = 0; i < size*m; i++) {
+		cout << '-';
+	}
+	cout << "GAME  BOARD";
+	for (int i = 0; i < size*m; i++) {
+		cout << '-';
+	}
+	cout << endl << endl;
+
+	/* the following is the one do not use /t*/
+	/*
+	void Board::printBoard(bool printAll)
+{
+
+	if (this->block == nullptr)
+		return;
+
+
+	//---GAME BOARD---
+	for (int i = 0; i < size; i++) {
+		cout << '-';
+	}
+	cout << "GAME BOARD";
+	for (int i = 0; i < size; i++) {
+		cout << '-';
+	}
+	cout << endl;
+
+	// pinrt the x-coordinate
+	cout << "  ";
+	for (int i = 0; i < size; i++) {
+		cout << i << " ";
+	}
+	cout << endl << "  ";
+	for (int i = 0; i < size; i++) {
+		cout << "- ";
+	}
+	cout << endl;
+	// end of printing x-coordinate
+
+	for (int i = 0; i < size; i++) {
+		// print the y-coordinate
+		cout << i << "|";
+		for (int j = 0; j < size; j++) {
+			if (this->block[i][j].getFlagged()) {
+				cout << "F ";
+				continue;
+			}
+			if (this->block[i][j].getExposed() || printAll) {
 				switch (this->block[i][j].getRole()) {
 				case 0:	cout << "  "; break;
 				case -1: cout << "X "; break;
 				default: cout << this->block[i][j].getRole() << " "; break;
 				}
+			}
 			else
 				cout << "? ";
 		}
-		cout << endl;
+		cout << " |" << i << endl;
 	}
 
+	// pinrt the x-coordinate
+	cout << "  ";
+	for (int i = 0; i < size; i++) {
+		cout << "- ";
+	}
+	cout << endl << "  ";
+	for (int i = 0; i < size; i++) {
+		cout << i << " ";
+	}
+	cout << endl;
+	// end of printing x-coordinate
+
 	//---GAME BOARD---
-	for (int i = 0; i < tempSize; i++) {
+	for (int i = 0; i < size; i++) {
 		cout << '-';
 	}
 	cout << "GAME BOARD";
-	for (int i = 0; i < tempSize; i++) {
+	for (int i = 0; i < size; i++) {
 		cout << '-';
 	}
 	cout << endl;
+}
+	*/
 }
 
 bool Board::getWin()
@@ -200,5 +329,27 @@ void Board::exposeNearby(int x, int y)
 			exposeNearby(startX, startY);
 	}
 	return;
+}
+
+void Board::checkBlockLeft()
+{
+	int temp = 0;
+	for (int i = 0; i < size; i++) {
+		for (int j = 0; j < size; j++) {
+			if (block[i][j].getExposed() || block[i][j].getFlagged())
+				temp++;
+		}
+	}
+	blocksLeft = size*size - temp;
+}
+
+int Board::getFlagLeft()
+{
+	return flagLeft;
+}
+
+int Board::getBlockLeft()
+{
+	return blocksLeft;
 }
 

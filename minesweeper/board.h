@@ -48,6 +48,12 @@ public:
 	// expose nearby block excepty booms
 	void exposeNearby(int x, int y);
 
+	// check the block left
+	void checkBlockLeft();
+
+	int getFlagLeft();
+	int getBlockLeft();
+
 };
 
 #endif

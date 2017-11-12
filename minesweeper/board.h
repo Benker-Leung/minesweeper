@@ -4,6 +4,7 @@
 
 #include "block.h"
 
+
 class Board {
 
 private:
@@ -32,7 +33,7 @@ public:
 	// flag the block and return true if it can be flagged
 	bool flagBlock(int x, int y);
 
-	// expose a block and return true if it can be exposed, and check the game board after exposing one block
+	// expose a block and return true if it can be exposed
 	bool exposeBlock(int x, int y);
 
 	// check the game is continue or not, return false if gameover

@@ -15,7 +15,7 @@ private:
 	int boomNum;		// storing the number of boom, also the total flag which the player have in total, set boomNum be 1/5 of the total blocks
 	int flagLeft;		// storing the number of flags where the player can use
 	bool gameContinue;	// a bool to store game status, it is false if gameover
-
+	bool win;			// true if win
 
 public:
 
@@ -38,6 +38,12 @@ public:
 
 	// check the game is continue or not, return false if gameover
 	bool checkGameContinue();
+
+	// print the game board, send true if print all the block even not exposed
+	void printBoard(bool printAll=false);
+
+	// get win or lose
+	bool getWin();
 
 };
 

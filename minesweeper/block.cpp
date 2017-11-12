@@ -1,5 +1,5 @@
 #include "block.h"
-
+#include "utils.h"
 Block::Block()
 {
 	this->x = -1;

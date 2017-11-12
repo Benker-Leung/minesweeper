@@ -3,12 +3,14 @@
 #define CONTROL_H_
 
 #include "board.h"
+#include "utils.h"
 
 class Control {
 
 private:
 
 	Board *board;		// store the game-board
+	int size;
 
 public:
 
@@ -17,8 +19,7 @@ public:
 	// destructor
 	~Control();
 
-	//TODO
-	// to be continued...
+	void startGame();
 
 };
 

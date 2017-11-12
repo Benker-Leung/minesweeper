@@ -17,7 +17,8 @@ public:
 	// destructor
 	~Control();
 
-
+	//TODO
+	// to be continued...
 
 };
 
